@@ -4,11 +4,15 @@ RUN apt-get update \
 	&& apt-get install -y \
 	build-essential \
 	curl \
+	iputils-ping \
+	dnsutils \
 	git \
-	golang \
+	python3 \
+	python3-pip \
 	sudo \
 	vim \
-	wget \
+	wget2 \
+	rsync \
 	libssl-dev \
 	libreadline-dev \
 	zlib1g-dev \

@@ -22,6 +22,13 @@ provider "docker" {
 data "coder_workspace" "me" {
 }
 
+data "coder_parameter" "dotfiles_url" {
+  name        = "dotfiles URL"
+  description = "Git repository with dotfiles"
+  mutable     = true
+  default     = ""
+}
+
 data "coder_workspace_owner" "me" {}
 
 resource "coder_agent" "main" {
@@ -43,7 +50,7 @@ resource "coder_agent" "main" {
     # Start code-server in the background.
     /tmp/code-server/bin/code-server --auth none --port 13337 >/tmp/code-server.log 2>&1 &
 
-    coder dotfiles -y ${var.dotfiles_uri}
+    coder dotfiles -y ${data.coder_parameter.dotfiles_url.value}
   EOT
 
   # These environment variables allow you to make Git commits right away after creating a
@@ -180,17 +187,6 @@ resource "docker_image" "main" {
     dir_sha1 = sha1(join("", [for f in fileset(path.module, "build/*") : filesha1(f)]))
   }
 }
-
-variable "dotfiles_uri" {
-  description = <<-EOF
-  Dotfiles repo URI (optional)
-
-  see https://dotfiles.github.io
-  EOF
-    # The codercom/enterprise-* images are only built for amd64
-  default = ""
-}
-
 
 resource "docker_container" "workspace" {
   count = data.coder_workspace.me.start_count

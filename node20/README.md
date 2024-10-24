@@ -7,11 +7,31 @@ verified: true
 tags: [docker, container]
 ---
 
-# Remote Development on Docker Containers
+# Basic Node 20 Dev Template for Coder
 
-Provision Docker containers as [Coder workspaces](https://coder.com/docs/workspaces) with this example template.
+## Description
 
-<!-- TODO: Add screenshot -->
+- Node 20
+- Postgres Client library
+- Development essentials
+    - Build essentials
+    - SSL libs
+    - Git
+    - Wget2
+    - curl
+    - dig
+    - ping
+    - Python3 and pip
+
+## Usage
+
+`coder login`
+
+`coder templates push -d . -y`
+
+
+Login to your Coder instance and create a new workspace from this template, or update an existing one
+
 
 ## Prerequisites
 
